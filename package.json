@@ -23,7 +23,9 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "eslint-config-prettier": "^9.1.0",
+    "modern-css-reset": "^1.4.0",
     "prettier": "^3.2.5",
+    "sass": "^1.77.4",
     "typescript": "^5"
   },
   "volta": {

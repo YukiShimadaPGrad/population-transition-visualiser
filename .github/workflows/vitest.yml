@@ -5,7 +5,7 @@ on:
     types: [ opened, reopened, synchronize, ready_for_review ]
 
 env:
-  WORKING_DIRECTORY: .
+  WORKING_DIRECTORY: ./
 
 jobs:
   test:
@@ -15,6 +15,9 @@ jobs:
       && !startsWith(github.head_ref, 'release')
       && !startsWith(github.head_ref, 'doc')
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     defaults:
       run:
         working-directory: ${{ env.WORKING_DIRECTORY }}

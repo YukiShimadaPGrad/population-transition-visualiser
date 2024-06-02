@@ -5,7 +5,7 @@ on:
     types: [ opened, reopened, synchronize, ready_for_review ]
 
 env:
-  WORKING_DIRECTORY: application
+  WORKING_DIRECTORY: .
 
 jobs:
   test:

@@ -1,9 +1,14 @@
+import { composeStories } from "@storybook/react";
+import * as stories from "./page.stories";
 import { render, screen } from "@testing-library/react";
-import Home from "./page";
 
-describe("Home", () => {
-  test("mainがある", () => {
-    render(<Home></Home>);
-    expect(screen.getByRole("main")).toBeInTheDocument();
+const { Default } = composeStories(stories);
+
+describe("Stories", () => {
+  describe("Default", () => {
+    test("mainがある", () => {
+      render(<Default />);
+      expect(screen.getByRole("main")).toBeInTheDocument();
+    });
   });
 });

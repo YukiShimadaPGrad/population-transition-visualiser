@@ -4,11 +4,6 @@ import Home from "./page";
 const meta = {
   title: "Home",
   component: Home,
-  parameters: {
-    nextjs: {
-      appDirectory: true,
-    },
-  },
 } as Meta<typeof Home>;
 
 export default meta;

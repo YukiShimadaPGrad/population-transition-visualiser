@@ -37,7 +37,7 @@ export default function MultiselectableChoices({ legend, options, onChoose }: Pl
   const [selections, setSelections] = useState<readonly string[]>(getSelections(options));
 
   return (
-    <fieldset aria-multiselectable>
+    <fieldset>
       <legend>{legend}</legend>
       {options.map(({ label, defaultChosen }) => (
         <LabeledChoice

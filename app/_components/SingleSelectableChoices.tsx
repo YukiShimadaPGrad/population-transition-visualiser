@@ -2,13 +2,13 @@ import LabeledSingleChoice from "./LabeledSingleChoice";
 
 /** 選択肢 */
 type Option = {
-  /** 表示ラベルおよび {@link Plops.onChoose} に渡される識別子 */
+  /** 表示ラベルおよび {@link Props.onChoose} に渡される識別子 */
   label: string;
   /** 初期の選択状態 */
   defaultChosen?: boolean;
 };
 
-type Plops = {
+type Props = {
   /** 選択肢をひとまとめに表すラベル */
   legend: string;
   /** 単一選択選択肢グループ */
@@ -32,7 +32,7 @@ type Plops = {
  *
  * 選択状態が変化した時は、{@link onChoose}で選択ラベルが通知される
  */
-export default function SingleSelectableChoices({ legend, group, options, onChoose }: Plops) {
+export default function SingleSelectableChoices({ legend, group, options, onChoose }: Props) {
   // 重複するlabelをもつOptionを削除
   options = options.filter(
     ({ label }, index, self) => self.findIndex((rhs) => label === rhs.label) === index

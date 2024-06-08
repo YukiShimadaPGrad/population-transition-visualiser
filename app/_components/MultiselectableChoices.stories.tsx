@@ -19,8 +19,9 @@ export const Default = {
       { label: "脂質", defaultChosen: 3 },
       { label: "タンパク質", defaultChosen: NaN },
       { label: "ビタミン", defaultChosen: -Infinity },
-      { label: "ミネラル" },
+      { label: "ミネラル", value: "mineral" },
       { label: "タンパク質", defaultChosen: Infinity },
+      { label: "五大栄養素", value: "mineral" },
     ],
     onChoose: fn(),
   },
@@ -45,6 +46,22 @@ export const Default = {
     await step("脂質を削除", async () => {
       await userEvent.click(canvas.getByLabelText("脂質"));
       await waitFor(() => expect(args.onChoose).toHaveBeenCalledTimes(2));
+      await expect(args.onChoose).toBeCalledWith(["ビタミン", "炭水化物"]);
+      await expect(await canvas.findAllByRole("checkbox", { checked: true })).toHaveLength(2);
+      await expect(await canvas.findAllByRole("checkbox", { checked: false })).toHaveLength(3);
+    });
+
+    await step("ミネラル(valueあり)を追加", async () => {
+      await userEvent.click(canvas.getByLabelText("ミネラル"));
+      await waitFor(() => expect(args.onChoose).toHaveBeenCalledTimes(3));
+      await expect(args.onChoose).toBeCalledWith(["ビタミン", "炭水化物", "mineral"]);
+      await expect(await canvas.findAllByRole("checkbox", { checked: true })).toHaveLength(3);
+      await expect(await canvas.findAllByRole("checkbox", { checked: false })).toHaveLength(2);
+    });
+
+    await step("ミネラル(valueあり)を削除", async () => {
+      await userEvent.click(canvas.getByLabelText("ミネラル"));
+      await waitFor(() => expect(args.onChoose).toHaveBeenCalledTimes(4));
       await expect(args.onChoose).toBeCalledWith(["ビタミン", "炭水化物"]);
       await expect(await canvas.findAllByRole("checkbox", { checked: true })).toHaveLength(2);
       await expect(await canvas.findAllByRole("checkbox", { checked: false })).toHaveLength(3);

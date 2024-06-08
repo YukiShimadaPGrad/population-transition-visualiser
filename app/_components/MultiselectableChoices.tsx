@@ -11,7 +11,7 @@ type Option = {
   defaultChosen?: number;
 };
 
-type Plops = {
+type Props = {
   /** 選択肢をひとまとめに表すラベル */
   legend: string;
   /** 表示する全ての選択肢 */
@@ -30,7 +30,7 @@ type Plops = {
  *
  * 選択状態が変化した時は、{@link onChoose}で選択ラベルとその順が通知される
  */
-export default function MultiselectableChoices({ legend, options, onChoose }: Plops) {
+export default function MultiselectableChoices({ legend, options, onChoose }: Props) {
   // 重複する識別子をもつOptionを削除
   options = options.filter(
     ({ label, value }, index, self) =>

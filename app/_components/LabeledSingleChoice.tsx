@@ -1,4 +1,4 @@
-type Plops = {
+type Props = {
   /** 表示ラベルおよび {@link onChoose} に渡される識別子*/
   label: string;
   /** この値が同じ {@link LabeledSingleChoice} コンポーネントからひとつだけを選べるようになる */
@@ -16,7 +16,7 @@ type Plops = {
 /**
  * ラジオボタンとラベルのペア
  */
-export default function LabeledSingleChoice({ label, group, defaultChosen, onChoose }: Plops) {
+export default function LabeledSingleChoice({ label, group, defaultChosen, onChoose }: Props) {
   return (
     <label>
       <input

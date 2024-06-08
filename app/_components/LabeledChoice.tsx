@@ -1,4 +1,4 @@
-type Plops = {
+type Props = {
   /** 表示ラベル */
   label: string;
   /** {@link onChoose} に渡される値。 もし Falsy なら {@link label} で代用する */
@@ -16,7 +16,7 @@ type Plops = {
 /**
  * チェックボックスとラベルのペア
  */
-export default function LabeledChoice({ label, value, defaultChosen, onChoose }: Plops) {
+export default function LabeledChoice({ label, value, defaultChosen, onChoose }: Props) {
   return (
     <label>
       <input

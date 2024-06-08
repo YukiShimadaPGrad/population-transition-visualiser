@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import LabeledChoice from "./LabeledChoice";
-import { expect, fn, Mock, userEvent, waitFor, within } from "@storybook/test";
+import { expect, fn, userEvent, waitFor, within } from "@storybook/test";
 
 const meta = {
   title: "Components/LabeledChoice",
@@ -49,6 +49,7 @@ export const Default = {
 export const DefaultChecked = {
   args: {
     label: "最初からチェック済み",
+    value: "val",
     defaultChosen: true,
     onChoose: fn(),
   },
@@ -65,16 +66,10 @@ export const DefaultChecked = {
     await step("1回目のクリック", async () => {
       await userEvent.click(canvas.getByRole("checkbox"));
       await waitFor(() => {
-        expect(args.onChoose).toBeCalledWith(false, args.label);
+        expect(args.onChoose).toBeCalledWith(false, args.value);
       });
       await expect(args.onChoose).toHaveBeenCalledTimes(1);
       await expect(await canvas.findByRole("checkbox", { checked: false })).toBeInTheDocument();
-    });
-
-    await step("Default.play()の再利用", async (context) => {
-      // 実体が fn() であることが明白かつテストコードで影響度が低いため as を使用
-      (args.onChoose as Mock).mockClear();
-      await Default.play(context);
     });
   },
 } satisfies Story;

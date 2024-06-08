@@ -34,7 +34,8 @@ jobs:
         run: npm ci
       - name: Run Vitest
         run: npx vitest --coverage.enabled true
-        env: RESAS_API_KEY:${{secrets.RESAS_API_KEY}}
+        env:
+          RESAS_API_KEY: ${{secrets.RESAS_API_KEY}}
       - name: Show coverage
         uses: davelosert/vitest-coverage-report-action@v2
         with:

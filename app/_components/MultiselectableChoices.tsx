@@ -2,7 +2,7 @@ import LabeledChoice from "./LabeledChoice";
 import { useState } from "react";
 
 /** 選択肢 */
-type Option = {
+export type Option = {
   /** 表示ラベル */
   label: string;
   /** {@link onChoose} に渡される値。 もし Falsy なら {@link label} で代用する */

@@ -26,6 +26,9 @@ export const ErrorType = {
   JSONParseError: "JSON parse error.",
 } as const;
 
+/** RESAS に関連する Server Actions が返すエラーの種類 */
+export type ErrorType = (typeof ErrorType)[keyof typeof ErrorType];
+
 /** 人口構成データの構成種類 */
 export const CompositionType = {
   All: "総人口",

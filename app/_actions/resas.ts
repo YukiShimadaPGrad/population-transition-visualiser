@@ -50,8 +50,6 @@ const ApiKind = {
 
 type ApiKind = (typeof ApiKind)[keyof typeof ApiKind];
 
-type ErrorType = (typeof ErrorType)[keyof typeof ErrorType];
-
 const positiveIntSchema = z.number().positive().int();
 
 const prefecturesSchema = z.object({

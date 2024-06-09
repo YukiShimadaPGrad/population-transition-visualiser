@@ -38,4 +38,4 @@ export const CompositionType = {
 } as const;
 
 /** 人口構成データの構成種類 */
-type CompositionType = (typeof CompositionType)[keyof typeof CompositionType];
+export type CompositionType = (typeof CompositionType)[keyof typeof CompositionType];

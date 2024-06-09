@@ -3,15 +3,15 @@
 import MultiselectableChoices, { Option } from "@/app/_components/MultiselectableChoices";
 import { useEffect, useState, useTransition } from "react";
 import { getPrefectures } from "@/app/_actions/resas";
-import { ErrorType } from "@/app/_actions/resas.types";
+import { ErrorType, Prefecture } from "@/app/_actions/resas.types";
 import * as r from "@totto2727/result";
 
 type Props = {
   /**
    * 選択状態が変化した時のコールバック
-   * @param prefCodes 選択された全ての都道府県コード 先に選択されたものから順に並ぶ
+   * @param prefectures 選択された全ての都道府県 先に選択されたものから順に並ぶ
    */
-  onChoose?: (prefCodes: readonly number[]) => void;
+  onChoose?: (prefectures: readonly Prefecture[]) => void;
 };
 
 /**
@@ -28,7 +28,7 @@ export default function PrefecturesSelector({ onChoose }: Props) {
       if (r.isSuccess(result)) {
         setPrefectures(
           result.value.map((v) => {
-            return { label: v.prefName, value: v.prefCode.toString() };
+            return { label: v.prefName, value: `${v.prefCode}_${v.prefName}` };
           })
         );
       } else {
@@ -46,7 +46,14 @@ export default function PrefecturesSelector({ onChoose }: Props) {
         <MultiselectableChoices
           legend={"都道府県を選択"}
           options={prefectures}
-          onChoose={(prefectures) => onChoose?.(prefectures.map((v) => Number.parseInt(v)))}
+          onChoose={(prefectures) =>
+            onChoose?.(
+              prefectures.map((v) => {
+                const split = v.split("_");
+                return { prefCode: parseInt(split[0]), prefName: split[1] };
+              })
+            )
+          }
         />
       )}
     </div>

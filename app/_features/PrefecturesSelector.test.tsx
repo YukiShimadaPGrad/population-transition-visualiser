@@ -17,11 +17,11 @@ describe("PrefectureSelector", () => {
     const fnMock = vi.fn();
     render(<PrefecturesSelector onChoose={fnMock} />);
     await userEvent.click(await screen.findByLabelText("青森県"));
-    expect(fnMock).toBeCalledWith([2]);
+    expect(fnMock).toBeCalledWith([dataset[1]]);
     await userEvent.click(screen.getByLabelText("北海道"));
-    expect(fnMock).toBeCalledWith([2, 1]);
+    expect(fnMock).toBeCalledWith([dataset[1], dataset[0]]);
     await userEvent.click(screen.getByLabelText("青森県"));
-    expect(fnMock).toBeCalledWith([1]);
+    expect(fnMock).toBeCalledWith([dataset[0]]);
     apiMock.mockRestore();
   });
 

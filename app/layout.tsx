@@ -5,8 +5,8 @@ import "modern-css-reset/dist/reset.min.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "人口推移可視化アプリ",
-  description: "選択した地域の人口推移をわかりやすく表示します。",
+  title: "人口推移見えーるくん",
+  description: "各都道府県の人口推移を可視化するアプリです。",
 };
 
 export default function RootLayout({

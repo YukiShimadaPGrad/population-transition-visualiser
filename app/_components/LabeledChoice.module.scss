@@ -10,5 +10,5 @@
 }
 
 .label:has(.button:checked) {
-  background-color: color-mix(in srgb, var(--color-primary) 50%, transparent);
+  background-color: color-mix(in srgb, var(--color-primary) 20%, transparent);
 }

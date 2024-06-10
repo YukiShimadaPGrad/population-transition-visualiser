@@ -1,0 +1,10 @@
+@forward "modern-css-reset";
+@forward "./variables";
+@forward "./mixin";
+
+@use "./variables";
+
+body {
+  color: var(--color-on-background);
+  background-color: var(--color-background);
+}

@@ -4,11 +4,14 @@
 }
 
 .label {
-  border-radius: 4px;
+  border-radius: 8px;
   padding: 2px 4px;
   display: inline-block;
+  border-style: solid;
+  border-width: thin;
+  border-color: rgb(0 0 0 / 0);
 }
 
 .label:has(.button:checked) {
-  background-color: color-mix(in srgb, var(--color-primary) 20%, transparent);
+  border-color: var(--color-primary);
 }

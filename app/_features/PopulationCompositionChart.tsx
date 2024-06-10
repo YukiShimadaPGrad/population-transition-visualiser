@@ -161,6 +161,8 @@ function toChartStruct(
 function yAxisFormatter(number: number): string {
   if (number > 1000000) {
     return (number / 1000000).toString() + "百万";
+  } else if (number > 1000) {
+    return (number / 1000).toString() + "千";
   } else {
     return number.toString();
   }

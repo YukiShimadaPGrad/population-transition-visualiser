@@ -24,8 +24,10 @@ describe("PrefectureSelector", () => {
     render(
       <PopulationCompositionChart compositionType={CompositionType.All} prefectures={dataset} />
     );
-    expect(await screen.findByText("青森県")).toBeInTheDocument();
+    expect(await screen.findByText("沖縄県")).toBeInTheDocument();
     expect(await screen.findByText("予測値との境界")).toBeInTheDocument();
+    expect((await screen.findAllByText(/^\d+(?:.\d+)?千$/))[0]).toBeInTheDocument();
+    expect((await screen.findAllByText(/^\d+(?:.\d+)?百万$/))[0]).toBeInTheDocument();
   });
 
   test("空でも問題なく動作する", async () => {
@@ -44,11 +46,11 @@ describe("PrefectureSelector", () => {
 
 const dataset = [
   {
-    prefCode: 1,
-    prefName: "北海道",
+    prefCode: 46,
+    prefName: "鹿児島県",
   },
   {
-    prefCode: 2,
-    prefName: "青森県",
+    prefCode: 47,
+    prefName: "沖縄県",
   },
 ] satisfies Prefecture[];

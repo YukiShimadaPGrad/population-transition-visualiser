@@ -21,6 +21,7 @@ import {
 import { useEffect, useState, useTransition } from "react";
 import { getPopulationCompositions } from "@/app/_actions/resas";
 import * as r from "@totto2727/result";
+import styles from "./PopulationCompositionChart.module.scss";
 
 type Props = {
   prefectures: Prefecture[];
@@ -57,14 +58,14 @@ export default function PopulationCompositionChart({ prefectures, compositionTyp
   return (
     <>
       {error ? (
-        <p>{error}</p>
+        <p className={styles.error}>{error}</p>
       ) : (
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={chartData.data[compositionType]}>
             <CartesianGrid strokeDasharray="3 3" />
 
             {isPending ? (
-              <text x="50%" y="50%" width={200} textAnchor="middle">
+              <text className={styles.loading} x="50%" y="50%" width={200} textAnchor="middle">
                 読み込み中…
               </text>
             ) : (
@@ -80,6 +81,7 @@ export default function PopulationCompositionChart({ prefectures, compositionTyp
             />
             <YAxis
               type="number"
+              width={60}
               tickFormatter={yAxisFormatter}
               label={<Label value="人口" position="insideTopRight" dx={-4} dy={20} />}
             />

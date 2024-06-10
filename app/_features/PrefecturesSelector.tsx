@@ -5,6 +5,7 @@ import { useEffect, useState, useTransition } from "react";
 import { getPrefectures } from "@/app/_actions/resas";
 import { ErrorType, Prefecture } from "@/app/_actions/resas.types";
 import * as r from "@totto2727/result";
+import styles from "./PrefecturesSelector.module.scss";
 
 type Props = {
   /**
@@ -39,9 +40,9 @@ export default function PrefecturesSelector({ onChoose }: Props) {
   return (
     <div>
       {isPending ? (
-        <p>読み込み中…</p>
+        <p className={styles.loading}>読み込み中…</p>
       ) : error ? (
-        <p>{error}</p>
+        <p className={styles.error}>{error}</p>
       ) : (
         <MultiselectableChoices
           legend={"都道府県を選択"}

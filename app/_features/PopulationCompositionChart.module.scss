@@ -1,0 +1,8 @@
+.error {
+  color: var(--color-on-error);
+  background-color: var(--color-error);
+}
+
+.loading {
+  text-decoration: underline solid var(--color-secondary);
+}

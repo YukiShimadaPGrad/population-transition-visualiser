@@ -1,0 +1,6 @@
+@use "./MultiselectableChoices.module";
+
+.container {
+  grid-template-columns: repeat(auto-fit, minmax(8em, 1fr));
+  gap: 10px 2%;
+}

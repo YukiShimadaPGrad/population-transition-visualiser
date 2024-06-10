@@ -1,4 +1,5 @@
 import LabeledSingleChoice from "./LabeledSingleChoice";
+import styles from "./SingleSelectableChoices.module.scss";
 
 /** 選択肢 */
 type Option = {
@@ -41,19 +42,21 @@ export default function SingleSelectableChoices({ legend, group, options, onChoo
   const defaultSelectedIndex = getDefaultSelectedIndex(options);
 
   return (
-    <fieldset>
-      <legend>{legend}</legend>
-      {options.map(({ label }, index) => (
-        <LabeledSingleChoice
-          key={label}
-          label={label}
-          group={group}
-          defaultChosen={defaultSelectedIndex == index}
-          onChoose={(_, label) => {
-            onChoose?.(label);
-          }}
-        />
-      ))}
+    <fieldset className={styles.fieldset}>
+      <legend className={styles.legend}>{legend}</legend>
+      <div className={styles.container}>
+        {options.map(({ label }, index) => (
+          <LabeledSingleChoice
+            key={label}
+            label={label}
+            group={group}
+            defaultChosen={defaultSelectedIndex == index}
+            onChoose={(_, label) => {
+              onChoose?.(label);
+            }}
+          />
+        ))}
+      </div>
     </fieldset>
   );
 }

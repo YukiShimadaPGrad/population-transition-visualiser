@@ -1,5 +1,6 @@
 import LabeledChoice from "./LabeledChoice";
 import { useState } from "react";
+import styles from "./MultiselectableChoices.module.scss";
 
 /** 選択肢 */
 export type Option = {
@@ -40,21 +41,23 @@ export default function MultiselectableChoices({ legend, options, onChoose }: Pr
   const [selections, setSelections] = useState<readonly string[]>(getSelections(options));
 
   return (
-    <fieldset>
-      <legend>{legend}</legend>
-      {options.map(({ label, value, defaultChosen }) => (
-        <LabeledChoice
-          key={getID(label, value)}
-          label={label}
-          value={value}
-          defaultChosen={Boolean(defaultChosen)}
-          onChoose={(isChosen, id) => {
-            const newSelections = updateSelections(isChosen, id, selections);
-            setSelections(() => newSelections);
-            onChoose?.(newSelections);
-          }}
-        />
-      ))}
+    <fieldset className={styles.fieldset}>
+      <legend className={styles.legend}>{legend}</legend>
+      <div className={styles.container}>
+        {options.map(({ label, value, defaultChosen }) => (
+          <LabeledChoice
+            key={getID(label, value)}
+            label={label}
+            value={value}
+            defaultChosen={Boolean(defaultChosen)}
+            onChoose={(isChosen, id) => {
+              const newSelections = updateSelections(isChosen, id, selections);
+              setSelections(() => newSelections);
+              onChoose?.(newSelections);
+            }}
+          />
+        ))}
+      </div>
     </fieldset>
   );
 }

@@ -1,3 +1,5 @@
+import styles from "./LabeledSingleChoice.module.scss";
+
 type Props = {
   /** 表示ラベルおよび {@link onChoose} に渡される識別子*/
   label: string;
@@ -18,8 +20,9 @@ type Props = {
  */
 export default function LabeledSingleChoice({ label, group, defaultChosen, onChoose }: Props) {
   return (
-    <label>
+    <label className={styles.label}>
       <input
+        className={styles.button}
         type="radio"
         name={group}
         value={label}

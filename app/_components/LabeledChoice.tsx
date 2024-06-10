@@ -1,3 +1,5 @@
+import styles from "./LabeledChoice.module.scss";
+
 type Props = {
   /** 表示ラベル */
   label: string;
@@ -18,8 +20,9 @@ type Props = {
  */
 export default function LabeledChoice({ label, value, defaultChosen, onChoose }: Props) {
   return (
-    <label>
+    <label className={styles.label}>
       <input
+        className={styles.button}
         type="checkbox"
         defaultChecked={defaultChosen}
         onChange={(ev) => {

@@ -9,6 +9,7 @@ const config: StorybookConfig = {
     "@storybook/addon-interactions",
     "@storybook/addon-a11y",
     "@storybook/addon-styling",
+    "storycap",
   ],
   framework: {
     name: "@storybook/nextjs",

@@ -94,10 +94,16 @@ export default function PopulationCompositionChart({ prefectures, compositionTyp
               strokeDasharray="3 3"
               label="予測値との境界"
             />
+
             {prefectures.length ? (
-              prefectures.map((v, i) => (
-                <Line key={v.prefName} dataKey={v.prefName} stroke={lineColors[i]} />
-              ))
+              <>
+                {prefectures.map((v, i) => (
+                  <Line key={v.prefName} dataKey={v.prefName} stroke={lineColors[i]} />
+                ))}
+                <text x="80" y="82%" textAnchor="start" fontSize="60%">
+                  RESAS（地域経済分析システム）を加工して作成
+                </text>
+              </>
             ) : (
               <Line key={noDataLabel} dataKey={noDataLabel} stroke="#000000" />
             )}

@@ -28,11 +28,17 @@ describe("PrefectureSelector", () => {
     expect(await screen.findByText("予測値との境界")).toBeInTheDocument();
     expect((await screen.findAllByText(/^\d+(?:.\d+)?千$/))[0]).toBeInTheDocument();
     expect((await screen.findAllByText(/^\d+(?:.\d+)?百万$/))[0]).toBeInTheDocument();
+    expect(
+      await screen.findByText("RESAS（地域経済分析システム）を加工して作成")
+    ).toBeInTheDocument();
   });
 
   test("空でも問題なく動作する", async () => {
     render(<PopulationCompositionChart compositionType={CompositionType.All} prefectures={[]} />);
     expect(await screen.findByText("No data")).toBeInTheDocument();
+    expect(
+      screen.queryByText("RESAS（地域経済分析システム）を加工して作成")
+    ).not.toBeInTheDocument();
   });
 
   test("エラー時にはその表示がある", async () => {

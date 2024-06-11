@@ -81,9 +81,12 @@ export default function PopulationCompositionChart({ prefectures, compositionTyp
             />
             <YAxis
               type="number"
-              width={60}
+              width={58}
+              fontSize="85%"
               tickFormatter={yAxisFormatter}
-              label={<Label value="人口" position="insideTopRight" dx={-4} dy={20} />}
+              label={
+                <Label value="人口" fontSize="85%" position="insideTopRight" dx={-3} dy={20} />
+              }
             />
             <ReferenceLine
               x={chartData.boundaryYear}
@@ -161,9 +164,9 @@ function toChartStruct(
 }
 
 function yAxisFormatter(number: number): string {
-  if (number > 1000000) {
+  if (number >= 1000000) {
     return (number / 1000000).toString() + "百万";
-  } else if (number > 1000) {
+  } else if (number >= 1000) {
     return (number / 1000).toString() + "千";
   } else {
     return number.toString();

@@ -38,11 +38,15 @@ export default function PrefecturesSelector({ onChoose }: Props) {
     });
   }, []);
   return (
-    <div>
+    <>
       {isPending ? (
-        <p className={styles.loading}>読み込み中…</p>
+        <div>
+          <p className={styles.loading}>読み込み中…</p>
+        </div>
       ) : error ? (
-        <p className={styles.error}>{error}</p>
+        <div>
+          <p className={styles.error}>{error}</p>
+        </div>
       ) : (
         <MultiselectableChoices
           legend={"都道府県を選択"}
@@ -57,6 +61,6 @@ export default function PrefecturesSelector({ onChoose }: Props) {
           }
         />
       )}
-    </div>
+    </>
   );
 }

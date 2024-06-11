@@ -1,4 +1,42 @@
+@use "app/_styles/vars";
+
+.header {
+  text-align: center;
+  border-top: 20px solid var(--color-primary-variant);
+  color: var(--color-on-primary);
+  background-color: var(--color-primary);
+  padding-bottom: 8px;
+}
+
 .main {
   margin: 0 auto;
+  padding: 0 20px;
   max-width: 1180px;
+}
+
+.section {
+  padding-top: 30px;
+}
+
+.prefSelectorContainer {
+  height: 21.8em;
+  @include vars.mq(sp) {
+    height: 14.2em;
+  }
+}
+
+.chartHeader {
+  text-align: center;
+  text-decoration: underline solid var(--color-primary);
+  text-decoration-thickness: 4px;
+}
+
+.chart {
+  padding: 12px;
+  height: 400px;
+  width: 100%;
+
+  @include vars.mq(sp) {
+    height: 500px;
+  }
 }

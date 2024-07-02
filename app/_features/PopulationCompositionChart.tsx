@@ -40,6 +40,7 @@ export default function PopulationCompositionChart({ prefectures, compositionTyp
 
   useEffect(() => {
     startTransition(async () => {
+      setError(null);
       const result = await getPopulationCompositions(prefectures.map(({ prefCode }) => prefCode));
       if (r.isSuccess(result)) {
         setChartData(

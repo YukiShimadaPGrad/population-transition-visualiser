@@ -25,6 +25,7 @@ export default function PrefecturesSelector({ onChoose }: Props) {
 
   useEffect(() => {
     startTransition(async () => {
+      setError(null);
       const result = await getPrefectures();
       if (r.isSuccess(result)) {
         setPrefectures(

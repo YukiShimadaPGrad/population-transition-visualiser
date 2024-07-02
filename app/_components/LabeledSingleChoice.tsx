@@ -1,8 +1,8 @@
 import styles from "./LabeledSingleChoice.module.scss";
 
-type Props = {
+type Props<T extends string> = {
   /** 表示ラベルおよび {@link onChoose} に渡される識別子*/
-  label: string;
+  label: T;
   /** この値が同じ {@link LabeledSingleChoice} コンポーネントからひとつだけを選べるようになる */
   group: string;
   /** 選択状態の初期値 */
@@ -12,13 +12,18 @@ type Props = {
    * @param isChosen 選択状態か否か
    * @param label 選択肢の表示名
    */
-  onChoose?: (isChosen: boolean, label: string) => void;
+  onChoose?: (isChosen: boolean, label: T) => void;
 };
 
 /**
  * ラジオボタンとラベルのペア
  */
-export default function LabeledSingleChoice({ label, group, defaultChosen, onChoose }: Props) {
+export default function LabeledSingleChoice<T extends string>({
+  label,
+  group,
+  defaultChosen,
+  onChoose,
+}: Props<T>) {
   return (
     <label className={styles.label}>
       <input

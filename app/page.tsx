@@ -24,8 +24,7 @@ export default function Home() {
           <SingleSelectableChoices
             legend="人口構成種別を選択"
             group="Composition Type"
-            // options.label が全て CompositionType なので as を使用
-            onChoose={(label: string) => setCompositionType(label as CompositionType)}
+            onChoose={(label: CompositionType) => setCompositionType(label)}
             options={[
               { label: CompositionType.All, defaultChosen: true },
               { label: CompositionType.Younger },

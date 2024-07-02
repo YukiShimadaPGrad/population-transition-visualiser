@@ -2,25 +2,25 @@ import LabeledSingleChoice from "./LabeledSingleChoice";
 import styles from "./SingleSelectableChoices.module.scss";
 
 /** 選択肢 */
-type Option = {
+type Option<T extends string> = {
   /** 表示ラベルおよび {@link Props.onChoose} に渡される識別子 */
-  label: string;
+  label: T;
   /** 初期の選択状態 */
   defaultChosen?: boolean;
 };
 
-type Props = {
+type Props<T extends string> = {
   /** 選択肢をひとまとめに表すラベル */
   legend: string;
   /** 単一選択選択肢グループ */
   group: string;
   /** 表示する全ての選択肢 */
-  options: Option[];
+  options: Option<T>[];
   /**
    * 選択状態が変化した時のコールバック
    * @param label 現在選択されたラベル
    */
-  onChoose?: (label: string) => void;
+  onChoose?: (label: T) => void;
 };
 
 /**
@@ -33,7 +33,12 @@ type Props = {
  *
  * 選択状態が変化した時は、{@link onChoose}で選択ラベルが通知される
  */
-export default function SingleSelectableChoices({ legend, group, options, onChoose }: Props) {
+export default function SingleSelectableChoices<T extends string>({
+  legend,
+  group,
+  options,
+  onChoose,
+}: Props<T>) {
   // 重複するlabelをもつOptionを削除
   options = options.filter(
     ({ label }, index, self) => self.findIndex((rhs) => label === rhs.label) === index
@@ -61,7 +66,7 @@ export default function SingleSelectableChoices({ legend, group, options, onChoo
   );
 }
 
-function getDefaultSelectedIndex(options: readonly Option[]): number {
+function getDefaultSelectedIndex<T extends string>(options: readonly Option<T>[]): number {
   for (let i = 0; i < options.length; i++) {
     if (options[i].defaultChosen) return i;
   }

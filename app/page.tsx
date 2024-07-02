@@ -43,6 +43,11 @@ export default function Home() {
             />
           </div>
         </section>
+        <section className={styles.section}>
+          <p>
+            都道府県情報および人口構成情報の取得には、RESAS（地域経済分析システム）を利用しています。
+          </p>
+        </section>
       </main>
     </>
   );

@@ -24,7 +24,14 @@
 
 また、 `Node.js` のバージョンは `package.json` の `volta`
 キーに記述してあり、コンピュータにバージョン管理ツール [Volta](https://docs.volta.sh/guide/)
-がインストールされていれば自動的にバージョンを合わせることができます。
+がインストールされていれば自動的にバージョンを合わせられます。
+
+本プロジェクトでは、環境変数を設定するために `.env.local` と `.env.test.local` を必要としています。
+双方に必要なキーは下記の通りです。
+
+| Key           | Description of value |
+| :------------ | :------------------- |
+| RESAS_API_KEY | API Key of RESAS     |
 
 ## Author
 

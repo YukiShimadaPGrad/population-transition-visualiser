@@ -21,8 +21,11 @@ describe("PrefectureSelector", () => {
   });
 
   test("エラーなく動くか確認", async () => {
-    render(
-      <PopulationCompositionChart compositionType={CompositionType.All} prefectures={dataset} />
+    const { rerender } = render(
+      <PopulationCompositionChart
+        compositionType={CompositionType.All}
+        prefectures={[dataset[1], dataset[2]]}
+      />
     );
     expect(await screen.findByText("沖縄県")).toBeInTheDocument();
     expect(await screen.findByText("予測値との境界")).toBeInTheDocument();
@@ -31,6 +34,18 @@ describe("PrefectureSelector", () => {
     expect(
       await screen.findByText("RESAS（地域経済分析システム）を加工して作成")
     ).toBeInTheDocument();
+    rerender(
+      <PopulationCompositionChart
+        compositionType={CompositionType.All}
+        prefectures={[dataset[1], dataset[2]]}
+      />
+    );
+    rerender(
+      <PopulationCompositionChart
+        compositionType={CompositionType.All}
+        prefectures={[dataset[0], dataset[2]]}
+      />
+    );
   });
 
   test("空でも問題なく動作する", async () => {
@@ -44,7 +59,9 @@ describe("PrefectureSelector", () => {
   test("エラー時にはその表示がある", async () => {
     const mock = vi.spyOn(resas, "getPopulationCompositions");
     mock.mockResolvedValue(r.fail(ErrorType.ApiError));
-    render(<PopulationCompositionChart compositionType={CompositionType.All} prefectures={[]} />);
+    render(
+      <PopulationCompositionChart compositionType={CompositionType.All} prefectures={errDataset} />
+    );
     expect(await screen.findByText(ErrorType.ApiError)).toBeInTheDocument();
     mock.mockRestore();
   });
@@ -52,11 +69,22 @@ describe("PrefectureSelector", () => {
 
 const dataset = [
   {
+    prefCode: 45,
+    prefName: "宮崎県",
+  },
+  {
     prefCode: 46,
     prefName: "鹿児島県",
   },
   {
     prefCode: 47,
     prefName: "沖縄県",
+  },
+] satisfies Prefecture[];
+
+const errDataset = [
+  {
+    prefCode: -1,
+    prefName: "Japan",
   },
 ] satisfies Prefecture[];

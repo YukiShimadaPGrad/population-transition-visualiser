@@ -24,8 +24,7 @@ export default function Home() {
           <SingleSelectableChoices
             legend="人口構成種別を選択"
             group="Composition Type"
-            // options.label が全て CompositionType なので as を使用
-            onChoose={(label: string) => setCompositionType(label as CompositionType)}
+            onChoose={(label: CompositionType) => setCompositionType(label)}
             options={[
               { label: CompositionType.All, defaultChosen: true },
               { label: CompositionType.Younger },
@@ -42,6 +41,11 @@ export default function Home() {
               compositionType={compositionType}
             />
           </div>
+        </section>
+        <section className={styles.section}>
+          <p>
+            都道府県情報および人口構成情報の取得には、RESAS（地域経済分析システム）を利用しています。
+          </p>
         </section>
       </main>
     </>

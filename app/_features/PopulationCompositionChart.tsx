@@ -18,7 +18,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { useEffect, useState, useTransition } from "react";
+import { useDeferredValue, useEffect, useState, useTransition } from "react";
 import { getPopulationCompositions } from "@/app/_actions/resas";
 import * as r from "@totto2727/result";
 import styles from "./PopulationCompositionChart.module.scss";
@@ -34,26 +34,39 @@ type Props = {
 export default function PopulationCompositionChart({ prefectures, compositionType }: Props) {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<ErrorType | null>(null);
-  const [chartData, setChartData] = useState<ChartStruct>(makeDefaultChartData());
+  const [isAnimationActive, setAnimationActive] = useState<boolean>(false);
+  const [_chartData, setChartData] = useState<ChartStruct>(makeDefaultChartData());
+  const deferredChartData = useDeferredValue(_chartData);
+  const [prevPrefectures, setPrevPrefectures] = useState<Prefecture[]>([]);
 
   const lineColors = makeColors(prefectures.length);
 
   useEffect(() => {
+    setAnimationActive(false);
+    setError(null);
+    {
+      const newChartData = tryToGetFromPrev(prevPrefectures, _chartData, prefectures);
+      setPrevPrefectures(prefectures);
+      if (newChartData) {
+        setChartData(newChartData);
+        return;
+      }
+    }
     startTransition(async () => {
       const result = await getPopulationCompositions(prefectures.map(({ prefCode }) => prefCode));
       if (r.isSuccess(result)) {
+        setAnimationActive(true);
         setChartData(
-          result.value.length
-            ? toChartStruct(
-                result.value,
-                prefectures.map(({ prefName }) => prefName)
-              )
-            : makeDefaultChartData()
+          toChartStruct(
+            result.value,
+            prefectures.map(({ prefName }) => prefName)
+          )
         );
       } else {
         setError(result.cause);
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prefectures]);
   return (
     <>
@@ -61,7 +74,7 @@ export default function PopulationCompositionChart({ prefectures, compositionTyp
         <p className={styles.error}>{error}</p>
       ) : (
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={chartData.data[compositionType]}>
+          <LineChart data={deferredChartData.data[compositionType]}>
             <CartesianGrid strokeDasharray="3 3" />
 
             {isPending ? (
@@ -89,7 +102,7 @@ export default function PopulationCompositionChart({ prefectures, compositionTyp
               }
             />
             <ReferenceLine
-              x={chartData.boundaryYear}
+              x={deferredChartData.boundaryYear}
               stroke="red"
               strokeDasharray="3 3"
               label="予測値との境界"
@@ -98,14 +111,24 @@ export default function PopulationCompositionChart({ prefectures, compositionTyp
             {prefectures.length ? (
               <>
                 {prefectures.map((v, i) => (
-                  <Line key={v.prefName} dataKey={v.prefName} stroke={lineColors[i]} />
+                  <Line
+                    key={v.prefName}
+                    dataKey={v.prefName}
+                    stroke={lineColors[i]}
+                    isAnimationActive={isAnimationActive}
+                  />
                 ))}
                 <text x="80" y="82%" textAnchor="start" fontSize="60%">
                   RESAS（地域経済分析システム）を加工して作成
                 </text>
               </>
             ) : (
-              <Line key={noDataLabel} dataKey={noDataLabel} stroke="#000000" />
+              <Line
+                key={noDataLabel}
+                dataKey={noDataLabel}
+                stroke="#000000"
+                isAnimationActive={isAnimationActive}
+              />
             )}
             <Legend />
             <Tooltip />
@@ -196,4 +219,21 @@ function makeColors(columnSize: number): string[] {
     colors[i] = `hsl(${division}, 100%, 50%)`;
   }
   return colors;
+}
+
+function tryToGetFromPrev(
+  prevPrefectures: Prefecture[],
+  prevChartData: ChartStruct,
+  newPrefectures: Prefecture[]
+): null | ChartStruct {
+  if (newPrefectures.length == 0) {
+    return makeDefaultChartData();
+  } else if (prevPrefectures.length < newPrefectures.length) {
+    return null;
+  }
+  return newPrefectures.some(
+    (new_p) => prevPrefectures.findIndex((prev_p) => new_p.prefCode == prev_p.prefCode) === -1
+  )
+    ? null
+    : prevChartData;
 }

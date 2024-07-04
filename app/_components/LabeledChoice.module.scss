@@ -3,6 +3,10 @@
   accent-color: var(--color-secondary);
 }
 
+.button:hover {
+  cursor: pointer;
+}
+
 .label {
   border-radius: 8px;
   padding: 2px 4px;
@@ -14,4 +18,8 @@
 
 .label:has(.button:checked) {
   border-color: var(--color-primary);
+}
+
+.label:hover {
+  cursor: pointer;
 }

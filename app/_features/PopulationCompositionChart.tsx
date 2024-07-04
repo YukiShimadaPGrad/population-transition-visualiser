@@ -37,28 +37,36 @@ export default function PopulationCompositionChart({ prefectures, compositionTyp
   const [isAnimationActive, setAnimationActive] = useState<boolean>(false);
   const [_chartData, setChartData] = useState<ChartStruct>(makeDefaultChartData());
   const deferredChartData = useDeferredValue(_chartData);
+  const [prevPrefectures, setPrevPrefectures] = useState<Prefecture[]>([]);
 
   const lineColors = makeColors(prefectures.length);
 
   useEffect(() => {
     setAnimationActive(false);
+    setError(null);
+    {
+      const newChartData = tryToGetFromPrev(prevPrefectures, _chartData, prefectures);
+      setPrevPrefectures(prefectures);
+      if (newChartData) {
+        setChartData(newChartData);
+        return;
+      }
+    }
     startTransition(async () => {
-      setError(null);
       const result = await getPopulationCompositions(prefectures.map(({ prefCode }) => prefCode));
       if (r.isSuccess(result)) {
         setAnimationActive(true);
         setChartData(
-          result.value.length
-            ? toChartStruct(
-                result.value,
-                prefectures.map(({ prefName }) => prefName)
-              )
-            : makeDefaultChartData()
+          toChartStruct(
+            result.value,
+            prefectures.map(({ prefName }) => prefName)
+          )
         );
       } else {
         setError(result.cause);
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prefectures]);
   return (
     <>
@@ -211,4 +219,21 @@ function makeColors(columnSize: number): string[] {
     colors[i] = `hsl(${division}, 100%, 50%)`;
   }
   return colors;
+}
+
+function tryToGetFromPrev(
+  prevPrefectures: Prefecture[],
+  prevChartData: ChartStruct,
+  newPrefectures: Prefecture[]
+): null | ChartStruct {
+  if (newPrefectures.length == 0) {
+    return makeDefaultChartData();
+  } else if (prevPrefectures.length < newPrefectures.length) {
+    return null;
+  }
+  return newPrefectures.some(
+    (new_p) => prevPrefectures.findIndex((prev_p) => new_p.prefCode == prev_p.prefCode) === -1
+  )
+    ? null
+    : prevChartData;
 }
